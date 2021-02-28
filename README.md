@@ -1,7 +1,7 @@
-# cap_inspection
+# cap_inspection: cavity number preprocess
 This is the repo used for the project  work in Computer Vision and Image processing.
 
-Project number preprocessing:  
+Cavity number preprocessing:  
 1. ### Introduction  
     The student should develop a software program to preprocess an image and get it ready for the OCR of the cavity number of a plastic cap.   
     The cap has an external tab at a fixed position in relation to the caivity number. Find in a picture of the external side of the cap and the image to be preprocessed. 
