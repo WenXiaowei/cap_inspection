@@ -1,0 +1,71 @@
+ edges = cv2.Canny(tab,threshold1=90,threshold2=80)
+
+    tab = cv2.threshold(tab,20,255, type = cv2.THRESH_BINARY,)[1]
+
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
+    opened= cv2.morphologyEx(tab, cv2.MORPH_OPEN,kernel,-1)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(4,4))
+    opened = cv2.morphologyEx(opened,cv2.MORPH_ERODE,kernel,-1)
+    
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+    opened = cv2.morphologyEx(opened,cv2.MORPH_CLOSE,kernel,-1)
+
+
+    plt.imshow(opened)
+    plt.title("Opened {}".format(i))
+    plt.show()
+
+    labels = measure.label(opened)
+    
+    # print("labels ={}".format(labels))# never decomment this 
+    print("There are {} blob/s".format(len(np.unique(labels))))
+
+    properties =['area','perimeter','bbox','bbox_area',
+                # 'convex_area',
+            # 'major_axis_length', 'minor_axis_length',
+            # 'eccentricity'
+            ]
+    df = pd.DataFrame(regionprops_table(labels, properties = properties))
+    df["compactness"]= df["perimeter"]**2/df["area"]
+    df["rectangularity"] = df["area"]/df["bbox_area"]
+        
+    if len(np.unique(labels))!= 1:
+        df= df[df["area"]>20]
+        df=df.sort_values(['rectangularity',"area",'compactness'])
+        print(df.head);
+        indexes = list(df.index.values)
+        best = indexes[0]
+
+        labels[labels==best]=0
+        labels[labels!=best]=255
+
+        plt.imshow(labels,cmap="gray")
+        plt.show()
+
+        area = df["area"][best]
+        # opened= labels.copy()
+    area = df.iloc[0]["area"]
+    print(first_row)
+
+    plt.imshow(labels,cmap="gray")
+    plt.title("suppressed {}".format(i))
+    plt.show()
+    (x_tab,y_tab) = compute_centroid(opened,x,y,area)
+
+    
+    angle = compute_rotation_angle(x_tab-x_center,y_tab-y_center)
+    
+
+    print("we need to rotate by {} degree".format(angle))    
+    cv2.circle(tab,(x_tab,y_tab),1,(0,0,0),10) # adding the barycenter of the centroid
+    
+    highlighted = cv2.circle(highlighted,(x_tab,y_tab),2,(255,0,0),3)
+    rotated_image= rotate(highlighted,angle)
+
+    plt.imshow(rotated_image)
+    plt.title("rotated degree {}".format(angle))
+    plt.show()
+    rotated_images.append(rotated_image)
+
+    cv2.circle(tab,(x, y),1,(255,255,255),10)
+    print("####################################################")
