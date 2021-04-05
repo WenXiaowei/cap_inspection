@@ -12,4 +12,23 @@ Cavity number preprocessing:
     Hint:  Find the annular region (radius > cap radius) which contains the tab; get a binary image where the tab is a white connected component. The centroid of the connected component and the center of the cap mouth are the end-points of a line segment; this segment and a vertical line gives an angle; use this angle to rotate the image in order to put the tab at the top of the image; crop the image.
 2. ### Second task: generate a rectified crop of the cavity number
     Student should:
-    - generate a rectified crop containing the cavity number (figure 10).  Hint: apply a polar transform. 
+    - generate a rectified crop containing the cavity number (figure 10).  Hint: apply a polar transform.
+    
+# Execution
+In order to execute the jupyter notebook, you will need python (I used python 3.7), then if you do not have jupyter notebook installed, execute the following command line in the terminal:
+
+```pip install jupyter```
+
+then, the program requires different libraries, you can find them in the   
+
+```requirements.txt```   
+
+file, to install them, open a terminal in the current main project folder and execute:  
+
+```pip install -r requirments```  
+
+After that, execute this command:   g
+
+```jupyter notebook --ip localhost```  
+
+Then a webpage will be prompted, and you can find the file ```Project_XiaoweiWen.ipynb```.
