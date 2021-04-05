@@ -25,7 +25,7 @@ then, the program requires different libraries, you can find them in the
 
 file, to install them, open a terminal in the current main project folder and execute:  
 
-```pip install -r requirments```  
+```pip install -r requirments.txt```  
 
 After that, execute this command:   g
 
